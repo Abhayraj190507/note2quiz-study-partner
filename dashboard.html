@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dashboard · Note2Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/dashboard.css">
+<script src="assets/js/user.js" defer></script></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></symbol>
+<symbol id="quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+<symbol id="cards" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+<symbol id="chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-6"/></symbol>
+<symbol id="trophy" viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4M18 9h2a2 2 0 0 0 2-2V5h-4M6 3h12v7a6 6 0 0 1-12 0zM12 16v3M8 21h8"/></symbol>
+<symbol id="flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.4 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+<symbol id="zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+<symbol id="search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+<symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+<symbol id="upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+<symbol id="target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+<symbol id="star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></symbol>
+</svg>
+
+<div class="app">
+<aside>
+<a class="logo" href="index.html" style="text-decoration:none;color:inherit"><b><svg class="i"><use href="#zap"/></svg></b>Note2Quiz</a>
+<nav class="nav" style="display:grid;gap:2px">
+<a class="on" href="#"><svg class="i"><use href="#home"/></svg>Dashboard</a>
+<a href="notes.html"><svg class="i"><use href="#file"/></svg>My notes</a>
+<a href="analyze.html"><svg class="i" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.2zM19 3v4M17 5h4M5 17v4M3 19h4"/></svg>AI analysis</a>
+<a href="quiz.html"><svg class="i"><use href="#quiz"/></svg>Quizzes</a>
+<a href="flashcards.html"><svg class="i"><use href="#cards"/></svg>Flashcards</a>
+<a href="revision-hub.html"><svg class="i" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg>Revision hub</a>
+<a href="planner.html"><svg class="i" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>Study planner</a>
+<a href="focus.html"><svg class="i" viewBox="0 0 24 24"><path d="M10 2h4M12 14l3-3M12 22a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/></svg>Focus mode</a>
+<a href="leaderboard.html"><svg class="i" viewBox="0 0 24 24"><path d="m2 7 5 5 5-8 5 8 5-5-2 12H4z"/></svg>Leaderboard</a>
+<a href="study-partner.html"><svg class="i"><use href="#chat"/></svg>Study partner</a>
+<a href="progress.html"><svg class="i"><use href="#chart"/></svg>Progress</a>
+<a href="achievements.html"><svg class="i"><use href="#trophy"/></svg>Achievements</a>
+<a href="design-system.html"><svg class="i"><use href="#star"/></svg>Design system</a>
+<a href="index.html"><svg class="i"><use href="#home"/></svg>Back to website</a>
+<a href="login.html"><svg class="i"><use href="#up"/></svg>Log out</a>
+</nav>
+<div class="me"><div class="av"></div><div><b style="font-weight:500">Aarav Sharma</b><small>Level 12 · 3,840 XP</small></div></div>
+</aside>
+
+<div>
+<div class="top">
+<label class="search"><svg class="i"><use href="#search"/></svg><input placeholder="Search notes, quizzes, topics" aria-label="Search"></label>
+<span class="sp"></span>
+<button class="btn" id="theme" aria-label="Switch theme"><svg class="i"><use href="#moon"/></svg></button>
+<button class="btn btn-p" data-toast="Quiz generator opened"><svg class="i"><use href="#plus"/></svg>New quiz</button>
+</div>
+
+<main>
+<section class="banner">
+<div><span class="chip" style="background:rgba(255,255,255,.12);color:var(--fg)"><svg class="i" style="width:13px;height:13px;color:var(--warn)"><use href="#flame"/></svg>14-day streak</span>
+<h1 id="hello" style="margin-top:12px">Good morning, Aarav</h1>
+<p>You’re 160 XP from Level 13 and 2 quizzes from this week’s goal. Your organic chemistry review is due today.</p></div>
+<div style="display:flex;gap:10px"><button class="btn btn-p" onclick="location.href='flashcards.html?review=1'"><svg class="i"><use href="#zap"/></svg>Start today’s review</button><button class="btn" onclick="location.href='study-partner.html'">Ask study partner</button></div>
+</section>
+
+<section class="grid" id="stats"></section>
+
+<section class="grid">
+<div class="card c4"><div class="hd"><h3>XP and level</h3><span class="chip">+420 this week</span></div>
+<div style="display:flex;gap:16px;align-items:center"><div class="lvl">12</div><div><div class="xpnum" data-n="3840">0</div><span class="sub">total XP</span></div></div>
+<div class="bar" style="margin-top:20px"><i data-w="76"></i></div>
+<div class="sub" style="display:flex;justify-content:space-between;margin-top:8px"><span>Level 12</span><span>160 XP to Level 13</span></div>
+<div style="display:flex;gap:6px;margin-top:18px;flex-wrap:wrap" id="levels"></div></div>
+
+<div class="card c4"><div class="hd"><h3>Study streak</h3><span class="sub">Last 14 days</span></div>
+<div class="flame"><svg class="i"><use href="#flame"/></svg><span data-n="14">0</span><span class="sub" style="font:400 .9rem var(--fb)">days in a row</span></div>
+<div class="heat" id="heat" aria-label="Study activity, last 14 days"></div>
+<p class="sub" style="margin-top:14px">Longest streak: 21 days. Study today to keep it going.</p></div>
+
+<div class="card c4"><div class="hd"><h3>Weekly goals</h3><span class="sub">Resets Monday</span></div>
+<div class="rings" id="rings"></div></div>
+</section>
+
+<section class="grid">
+<div class="card c8"><div class="hd"><div><h3>Study time</h3><span class="sub">Minutes per day this week</span></div><span class="chip"><svg class="i" style="width:12px;height:12px"><use href="#up"/></svg>18% vs last week</span></div>
+<div id="bars"></div></div>
+<div class="card c4"><div class="hd"><h3>Monthly goals</h3><span class="sub">October</span></div><div id="goals"></div></div>
+</section>
+
+<section class="grid">
+<div class="card c6"><div class="hd"><div><h3>Quiz accuracy</h3><span class="sub">Last 30 days</span></div><div class="xpnum" style="font-size:1.4rem">88%</div></div>
+<svg class="line" id="line" viewBox="0 0 600 150" preserveAspectRatio="none"></svg></div>
+<div class="card c6"><div class="hd"><h3>Quick actions</h3></div>
+<div class="qa">
+<button data-toast="Choose a file to upload" onclick="location.href='notes.html'"><svg class="i"><use href="#upload"/></svg>Upload notes</button>
+<button data-toast="Generating quiz…"><svg class="i"><use href="#quiz"/></svg>Generate quiz</button>
+<button onclick="location.href='flashcards.html?review=1'"><svg class="i"><use href="#cards"/></svg>Review flashcards</button>
+<button onclick="location.href='study-partner.html'"><svg class="i"><use href="#chat"/></svg>Ask study partner</button></div></div>
+</section>
+
+<section class="grid">
+<div class="card c8"><div class="hd"><h3>Recent activity</h3><a class="sub" href="#" style="color:var(--primary)">View all</a></div><div id="acts"></div></div>
+<div class="card c4"><div class="hd"><h3>Focus today</h3></div>
+<div style="display:grid;gap:14px"><div><div class="sub">Weakest topic</div><b>Enzyme kinetics</b><div class="bar" style="margin-top:8px"><i data-w="42" style="background:var(--bad)"></i></div></div>
+<div><div class="sub">Strongest topic</div><b>Cell structure</b><div class="bar" style="margin-top:8px"><i data-w="96" style="background:var(--ok)"></i></div></div>
+<button class="btn btn-p" style="justify-content:center" data-toast="Practice set created"><svg class="i"><use href="#target"/></svg>Practice weak spots</button></div></div>
+</section>
+
+<section class="card"><div class="hd"><h3>Achievements</h3><span class="sub">5 of 8 unlocked</span></div><div class="ach" id="ach"></div></section>
+</main>
+</div>
+</div>
+<div id="toast" role="status"></div>
+
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>

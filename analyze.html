@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI analysis · Note2Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/dashboard.css">
+<link rel="stylesheet" href="assets/css/analyze.css">
+<script src="assets/js/user.js" defer></script></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></symbol>
+<symbol id="quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+<symbol id="cards" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+<symbol id="chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-6"/></symbol>
+<symbol id="trophy" viewBox="0 0 24 24"><path d="M6 9H4a2 2 0 0 1-2-2V5h4M18 9h2a2 2 0 0 0 2-2V5h-4M6 3h12v7a6 6 0 0 1-12 0zM12 16v3M8 21h8"/></symbol>
+<symbol id="zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+<symbol id="up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+<symbol id="upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+<symbol id="star" viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></symbol>
+<symbol id="spark" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.2zM19 3v4M17 5h4M5 17v4M3 19h4"/></symbol>
+<symbol id="list" viewBox="0 0 24 24"><path d="m3 7 2 2 4-4M3 17l2 2 4-4M13 6h8M13 12h8M13 18h8"/></symbol>
+<symbol id="tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8zM7 7h.01"/></symbol>
+<symbol id="bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></symbol>
+<symbol id="sigma" viewBox="0 0 24 24"><path d="M18 7V4H6l6 8-6 8h12v-3"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5zM20 17v5H6.5A2.5 2.5 0 0 1 4 19.5"/></symbol>
+<symbol id="marker" viewBox="0 0 24 24"><path d="m9 11-6 6v3h9l3-3M22 12l-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></symbol>
+<symbol id="map" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+<symbol id="copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="redo" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+<symbol id="minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+<symbol id="fit" viewBox="0 0 24 24"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></symbol>
+<symbol id="layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7zM2 12l10 5 10-5"/></symbol>
+<symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol>
+</svg>
+
+<div class="app">
+<aside>
+<a class="logo" href="index.html" style="text-decoration:none;color:inherit"><b><svg class="i"><use href="#zap"/></svg></b>Note2Quiz</a>
+<nav class="nav" style="display:grid;gap:2px">
+<a href="dashboard.html"><svg class="i"><use href="#home"/></svg>Dashboard</a>
+<a href="notes.html"><svg class="i"><use href="#file"/></svg>My notes</a>
+<a class="on" href="analyze.html"><svg class="i"><use href="#spark"/></svg>AI analysis</a>
+<a href="quiz.html"><svg class="i"><use href="#quiz"/></svg>Quizzes</a>
+<a href="flashcards.html"><svg class="i"><use href="#cards"/></svg>Flashcards</a>
+<a href="revision-hub.html"><svg class="i" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg>Revision hub</a>
+<a href="planner.html"><svg class="i" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>Study planner</a>
+<a href="focus.html"><svg class="i" viewBox="0 0 24 24"><path d="M10 2h4M12 14l3-3M12 22a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/></svg>Focus mode</a>
+<a href="leaderboard.html"><svg class="i" viewBox="0 0 24 24"><path d="m2 7 5 5 5-8 5 8 5-5-2 12H4z"/></svg>Leaderboard</a>
+<a href="study-partner.html"><svg class="i"><use href="#chat"/></svg>Study partner</a>
+<a href="progress.html"><svg class="i"><use href="#chart"/></svg>Progress</a>
+<a href="achievements.html"><svg class="i"><use href="#trophy"/></svg>Achievements</a>
+<a href="design-system.html"><svg class="i"><use href="#star"/></svg>Design system</a>
+<a href="login.html"><svg class="i"><use href="#up"/></svg>Log out</a>
+</nav>
+<div class="me"><div class="av"></div><div><b style="font-weight:500">Aarav Sharma</b><small>Level 12 · 3,840 XP</small></div></div>
+</aside>
+
+<div>
+<div class="top">
+<span class="pg"><svg class="i"><use href="#spark"/></svg>AI note analysis</span>
+<span class="sp"></span>
+<button class="btn" id="theme" aria-label="Switch theme"><svg class="i"><use href="#moon"/></svg></button>
+<button class="btn btn-p" id="up-top"><svg class="i"><use href="#upload"/></svg>Upload notes</button>
+</div>
+
+<main class="an">
+<section class="banner">
+<div>
+<span class="chip" style="background:rgba(255,255,255,.12);color:var(--fg)"><svg class="i" style="width:13px;height:13px"><use href="#spark"/></svg>8 analysis modules</span>
+<h1 style="margin-top:12px">Turn messy notes into clear study material</h1>
+<p>Paste or upload your notes and get a summary, key points, topics, concepts, formulas, definitions, highlights and a mind map in one pass.</p>
+</div>
+</section>
+
+<section class="card in" id="input">
+<div class="in-top">
+<input class="title-in" id="title" value="Photosynthesis &amp; cellular respiration" aria-label="Note title" maxlength="80">
+<span class="sub" id="wc">0 words</span>
+<button class="btn btn-sm" id="sample"><svg class="i"><use href="#file"/></svg>Load sample</button>
+<button class="btn btn-sm" id="pick"><svg class="i"><use href="#upload"/></svg>Upload .txt / .md</button>
+<button class="btn btn-sm" id="clear" aria-label="Clear notes"><svg class="i"><use href="#trash"/></svg></button>
+<input type="file" id="file" accept=".txt,.md,text/plain,text/markdown" hidden>
+</div>
+<textarea class="note" id="text" placeholder="Paste your notes here…" aria-label="Your notes" spellcheck="false"></textarea>
+<div>
+<div class="sub" style="margin-bottom:8px">Analysis modules <span style="opacity:.7">· choose what to generate</span></div>
+<div class="mods" id="mods" role="group" aria-label="Analysis modules"></div>
+</div>
+<div class="in-foot">
+<span class="sub demo"><svg class="i"><use href="#layers"/></svg>Frontend preview: results below are sample data until the AI service is connected.</span>
+<button class="btn btn-p btn-lg" id="go"><svg class="i"><use href="#spark"/></svg>Analyze notes</button>
+</div>
+</section>
+
+<section class="card pipe" id="pipe" hidden aria-live="polite">
+<div class="hd"><div><h3 id="pipe-t">Analyzing your notes</h3><span class="sub" id="pipe-s">This usually takes a few seconds</span></div><span class="chip" id="pipe-p">0%</span></div>
+<div class="bar"><i id="pipe-b"></i></div>
+<ul class="steps" id="steps"></ul>
+</section>
+
+<div id="results" hidden></div>
+</main>
+</div>
+</div>
+<div id="toast" role="status"></div>
+<script src="assets/js/analyze.js"></script>
+</body>
+</html>

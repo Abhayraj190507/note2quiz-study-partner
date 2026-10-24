@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Theme tokens (space-separated RGB so Tailwind can add opacity) ---------- */
+:root {
+  --bg: 10 12 20; --surface: 19 22 34; --fg: 235 238 245; --muted: 141 148 168; --line: 37 42 59;
+  --primary: 124 92 252; --accent: 43 224 247;
+  --success: 45 217 154; --warning: 249 185 63; --danger: 242 84 107;
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  --bg: 246 247 251; --surface: 255 255 255; --fg: 20 23 43; --muted: 94 102 125; --line: 221 225 236;
+  --accent: 8 145 178; --success: 5 150 105; --warning: 180 83 9; --danger: 220 38 70;
+  color-scheme: light;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-bg font-sans text-[15px] leading-relaxed text-fg antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { @apply font-display tracking-tight; }
+  :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; border-radius: 6px; }
+  ::selection { background: rgb(var(--primary) / .4); }
+  * { scrollbar-width: thin; scrollbar-color: rgb(var(--line)) transparent; }
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(180deg, rgb(var(--fg) / .06), rgb(var(--fg) / .02));
+    border: 1px solid rgb(var(--fg) / .09);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgb(var(--fg) / .06), 0 24px 48px -28px rgb(0 0 0 / .5);
+  }
+  :root[data-theme='light'] .glass {
+    background: rgb(var(--surface) / .85);
+    box-shadow: 0 1px 2px rgb(20 23 43 / .05), 0 18px 40px -24px rgb(20 23 43 / .18);
+  }
+  .field {
+    @apply h-11 w-full rounded-xl border border-line bg-fg/[.03] px-3.5 text-sm text-fg placeholder:text-muted/70 transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30;
+  }
+  .page { @apply mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .bg-grid {
+    background-image: linear-gradient(rgb(var(--fg) / .05) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--fg) / .05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+  .scroll-hide::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}

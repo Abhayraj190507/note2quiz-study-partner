@@ -1,0 +1,5 @@
+Flask>=3.0
+PyJWT>=2.7
+python-dotenv>=1.0
+pypdf>=4.0          # PDF text extraction (falls back to the pdftotext CLI if missing)
+gunicorn>=22.0      # production server

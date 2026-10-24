@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Note2Quiz design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/design-system.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M20 17v4H6.5a2.5 2.5 0 0 1 0-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="m10.3 3.9-8.5 14.7A2 2 0 0 0 3.5 21.6h17a2 2 0 0 0 1.7-3l-8.5-14.7a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.4 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-5.9.8A4 4 0 0 0 4 12a4 4 0 0 0 2.5 3.7A3 3 0 0 0 12 18zM12 5a3 3 0 1 1 5.9.8A4 4 0 0 1 20 12a4 4 0 0 1-2.5 3.7A3 3 0 0 1 12 18zM12 5v13"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+</svg>
+
+<div class="glow" style="top:-160px;left:50%;width:900px;height:460px;margin-left:-450px;background:color-mix(in srgb,var(--primary) 24%,transparent)"></div>
+<div class="glow" style="top:380px;right:-160px;width:340px;height:340px;background:color-mix(in srgb,var(--accent) 12%,transparent)"></div>
+
+<main>
+  <header class="reveal" style="display:grid;gap:20px">
+    <div class="top">
+      <span class="badge badge-accent">Design system v1.0</span>
+      <span style="display:flex;gap:6px"><a class="btn btn-ghost btn-sm" href="index.html" style="text-decoration:none">Website</a><a class="btn btn-ghost btn-sm" href="dashboard.html" style="text-decoration:none">Dashboard</a><button class="btn btn-ghost btn-sm" id="theme" aria-label="Switch theme"><svg class="icon"><use href="#i-moon"/></svg>Theme</button></span>
+    </div>
+    <h1 class="display">Notes in.<br>Quizzes out.</h1>
+    <p class="body">Nightdesk is the interface language for Note2Quiz and your AI study partner: dark by default, glass surfaces that stay quiet, and one violet that always means “do this.”</p>
+    <div class="row">
+      <button class="btn btn-primary btn-lg" data-open="modal"><svg class="icon"><use href="#i-spark"/></svg>Generate quiz</button>
+      <button class="btn btn-secondary btn-lg"><svg class="icon"><use href="#i-book"/></svg>Browse notes</button>
+    </div>
+  </header>
+
+  <section>
+    <div><h2 class="h1">Color</h2><p class="small">CSS variables on :root. Violet is reserved for actions.</p></div>
+    <div class="grid g5" id="palette"></div>
+  </section>
+
+  <section>
+    <div><h2 class="h1">Typography</h2><p class="small">Sora for headings, Inter for reading. Sentence case everywhere.</p></div>
+    <div class="glass card" style="display:grid;gap:16px">
+      <div class="display" style="font-size:2.4rem">Sora 700, display</div>
+      <div class="h1">Heading one, Sora 600, 28</div>
+      <div class="h2">Heading two, Sora 600, 19</div>
+      <p class="body">Body text is Inter 15 on 25, capped at 64 characters so long summaries stay easy to read.</p>
+      <p class="small">Caption, Inter 14, Mist</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="h1">Buttons</h2>
+    <div class="row">
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-outline">Outline</button>
+      <button class="btn btn-ghost">Ghost</button>
+      <button class="btn btn-danger">Delete note</button>
+      <button class="btn btn-primary btn-sm"><svg class="icon"><use href="#i-plus"/></svg>Small</button>
+      <button class="btn btn-primary loading">Loading</button>
+      <button class="btn btn-primary" disabled>Disabled</button>
+    </div>
+    <div><button class="btn btn-secondary" id="run">Try loading and toast</button></div>
+  </section>
+
+  <section>
+    <h2 class="h1">Cards</h2>
+    <div class="grid g3">
+      <div class="glass card"><span class="chip"><svg class="icon"><use href="#i-flame"/></svg></span><div class="stat">14</div><p class="small">Day streak</p></div>
+      <div class="glass card"><span class="chip"><svg class="icon"><use href="#i-brain"/></svg></span><div class="stat">248</div><p class="small">Concepts mastered</p></div>
+      <div class="glass card"><span class="chip"><svg class="icon"><use href="#i-layers"/></svg></span><div class="stat">63</div><p class="small">Quizzes taken</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="glass card card-hover"><div class="row" style="flex-wrap:nowrap;align-items:flex-start">
+        <svg class="icon" style="color:var(--accent);margin-top:4px"><use href="#i-file"/></svg>
+        <div><div style="font-weight:500">Cell biology, week 4</div><p class="small">Edited 2 hours ago, 18 flashcards</p></div></div>
+        <div class="bar"><i data-w="72"></i></div></div>
+      <div class="glass card card-hover"><div class="row" style="flex-wrap:nowrap;align-items:flex-start">
+        <svg class="icon" style="color:var(--accent);margin-top:4px"><use href="#i-file"/></svg>
+        <div><div style="font-weight:500">Constitutional law outline</div><p class="small">Edited yesterday, 31 flashcards</p></div></div>
+        <div class="bar"><i data-w="38"></i></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="h1">Inputs</h2>
+    <div class="grid g2">
+      <div class="field"><label for="q">Search notes</label><div class="control"><svg class="icon"><use href="#i-search"/></svg><input id="q" class="input with-icon" placeholder="Photosynthesis, torts, derivatives…"></div></div>
+      <div class="field"><label for="e">Email</label><input id="e" class="input" type="email" placeholder="you@school.edu"><span class="hint">We’ll send your weekly progress here.</span></div>
+      <div class="field error"><label for="t">Quiz title</label><input id="t" class="input" value="Hi"><span class="hint">Give your quiz a name that’s at least 3 characters.</span></div>
+      <div class="field"><label for="n">Paste notes</label><textarea id="n" class="textarea" placeholder="Paste or type anything you want to learn…"></textarea></div>
+    </div>
+  </section>
+
+  <section>
+    <div><h2 class="h1">Toasts</h2><p class="small">Bottom right, dismiss after 4 seconds, announced to screen readers.</p></div>
+    <div class="row">
+      <button class="btn btn-outline" data-toast="success|Notes saved|">Success</button>
+      <button class="btn btn-outline" data-toast="info|Syncing across devices|This takes a few seconds.">Info</button>
+      <button class="btn btn-outline" data-toast="error|Couldn’t read that file|Upload a PDF, DOCX or TXT under 20 MB.">Error</button>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="h1">Loading skeletons</h2>
+    <div class="grid g2" id="skels"></div>
+  </section>
+</main>
+
+<div class="overlay" id="modal" aria-hidden="true">
+  <div class="modal glass" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <button class="btn btn-ghost x" data-close aria-label="Close"><svg class="icon"><use href="#i-x"/></svg></button>
+    <h2 class="h2" id="mt">Generate a quiz</h2>
+    <p class="small">Pick a note and we’ll turn it into questions.</p>
+    <div class="modal-body">
+      <div class="field"><label for="mn">Note</label><input id="mn" class="input" placeholder="Cell biology, week 4"></div>
+      <div class="field"><label for="mq">Number of questions</label><input id="mq" class="input" type="number" value="12"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close>Cancel</button>
+      <button class="btn btn-primary" id="go"><svg class="icon"><use href="#i-spark"/></svg>Generate quiz</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<script src="assets/js/design-system.js"></script>
+</body>
+</html>

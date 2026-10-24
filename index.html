@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Note2Quiz: turn any note into a quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/landing.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="spark" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></symbol>
+<symbol id="brain" viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-5.9.8A4 4 0 0 0 4 12a4 4 0 0 0 2.5 3.7A3 3 0 0 0 12 18zM12 5a3 3 0 1 1 5.9.8A4 4 0 0 1 20 12a4 4 0 0 1-2.5 3.7A3 3 0 0 1 12 18zM12 5v13"/></symbol>
+<symbol id="zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+<symbol id="chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 4 5-6"/></symbol>
+<symbol id="ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+<symbol id="layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+<symbol id="flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.4 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+<symbol id="up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+</svg>
+
+<nav><div class="wrap glass"><a class="logo" href="#top"><b><svg class="i"><use href="#spark"/></svg></b>Note2Quiz</a>
+<div class="links"><a href="#features">Features</a><a href="#preview">Product</a><a href="#ai">AI partner</a><a href="#faq">FAQ</a><a href="design-system.html">Design system</a></div>
+<span style="display:flex;gap:8px"><a class="btn btn-g" href="login.html">Log in</a><a class="btn btn-p" href="signup.html">Start free</a></span></div></nav>
+
+<header class="hero" id="top">
+<div class="aurora"><i></i><i></i><i></i></div><div class="grid-bg"></div>
+<div class="wrap">
+<div>
+<span class="tag"><svg class="i" style="width:14px;height:14px"><use href="#spark"/></svg>New: AI study partner that explains your mistakes</span>
+<h1 style="margin-top:22px">Turn any note into a <span class="grad">quiz in seconds.</span></h1>
+<p class="lead">Paste lecture notes, upload a PDF, or snap a photo. Note2Quiz builds questions, tracks what you forget, and a tutor that knows your notes helps you fix it.</p>
+<div class="cta"><a class="btn btn-p btn-lg" href="signup.html"><svg class="i"><use href="#zap"/></svg>Try it free</a><a class="btn btn-g btn-lg" href="#preview">See how it works</a></div>
+<div class="trust"><div class="av"><span></span><span></span><span></span></div>Loved by 48,000 students at 900+ schools</div>
+</div>
+<div class="stage" aria-label="Live demo: notes become a quiz question">
+<div class="glass note"><b>Cell biology, week 4</b><span id="typed"></span><span class="caret"></span></div>
+<div class="glass quiz" id="quiz">
+<span class="tag"><svg class="i" style="width:14px;height:14px"><use href="#brain"/></svg>Generated question 1 of 12</span>
+<div class="q">Which organelle produces most of the cell’s ATP?</div>
+<button class="opt" data-r="0">Golgi apparatus</button><button class="opt" data-r="1">Mitochondrion</button><button class="opt" data-r="0">Lysosome</button>
+</div>
+<div class="glass float" style="top:6%;right:4%"><svg class="i"><use href="#flame"/></svg>14-day streak</div>
+<div class="glass float" style="top:48%;left:-6%;animation-delay:-2s"><svg class="i"><use href="#ok"/></svg>92% recall</div>
+<div class="glass float" style="bottom:-4%;left:8%;animation-delay:-4s"><svg class="i"><use href="#zap"/></svg>12 questions in 3s</div>
+</div>
+</div>
+</header>
+
+<section class="sec" id="features"><div class="wrap">
+<h2 class="rv">Everything you need to actually remember it</h2>
+<p class="lead rv">Reading notes again feels like studying. Testing yourself is what works. We make testing effortless.</p>
+<div class="bento">
+<div class="glass card w2 rv"><div class="ic"><svg class="i"><use href="#zap"/></svg></div><h3>Notes to quiz, instantly</h3><p>Paste text, drop in a PDF or slides, and get multiple choice, short answer and flashcards that follow your material, not generic trivia.</p></div>
+<div class="glass card rv"><div class="ic"><svg class="i"><use href="#brain"/></svg></div><h3>Spaced repetition</h3><p>Questions come back right before you’d forget them.</p></div>
+<div class="glass card rv"><div class="ic"><svg class="i"><use href="#chat"/></svg></div><h3>AI study partner</h3><p>Ask why an answer is wrong and get an explanation from your own notes.</p></div>
+<div class="glass card rv"><div class="ic"><svg class="i"><use href="#chart"/></svg></div><h3>Weak spot radar</h3><p>See which topics cost you points before the exam does.</p></div>
+<div class="glass card rv"><div class="ic"><svg class="i"><use href="#layers"/></svg></div><h3>Study together</h3><p>Share a deck with your group and compare progress.</p></div>
+</div></div></section>
+
+<section class="sec" id="preview"><div class="aurora" style="opacity:.5;mask-image:linear-gradient(transparent,#000,transparent)"><i></i><i></i></div><div class="wrap" style="position:relative">
+<h2 class="rv">Your whole semester in one calm dashboard</h2>
+<div class="glass app rv">
+<div class="side"><div class="on">Dashboard</div><div>My notes</div><div>Quizzes</div><div>Flashcards</div><div>Study partner</div><div>Progress</div></div>
+<div class="main">
+<div class="kpis"><div class="kpi"><b>14</b><span>Day streak</span></div><div class="kpi"><b>248</b><span>Concepts mastered</span></div><div class="kpi"><b>92%</b><span>Average recall</span></div></div>
+<div class="chart" id="chart" aria-label="Weekly study minutes"></div>
+<div class="kpi" style="display:flex;justify-content:space-between;align-items:center"><div><b style="font-size:1.05rem">Organic chemistry midterm</b><span>Review 24 cards due today</span></div><span class="btn btn-p" style="height:36px">Start review</span></div>
+</div></div></div></section>
+
+<section class="sec" id="ai"><div class="wrap ai">
+<div><h2 class="rv">A tutor that has read your notes</h2>
+<p class="lead rv">It doesn’t guess from the internet. Every answer points back to a line in your own material.</p>
+<div class="checks rv"><div><svg class="i"><use href="#ok"/></svg><span><b>Explains mistakes.</b> Learn why Golgi was the wrong pick.</span></div>
+<div><svg class="i"><use href="#ok"/></svg><span><b>Quotes your notes.</b> Every answer shows its source page.</span></div>
+<div><svg class="i"><use href="#ok"/></svg><span><b>Adapts difficulty.</b> Easier when you’re stuck, harder when you’re cruising.</span></div></div>
+<p class="rv" style="margin-top:18px"><a class="btn btn-p" href="study-partner.html">Open study partner</a></p>
+</div>
+<div class="glass chat" id="chat" aria-live="polite">
+<div class="m u">Why isn’t it the Golgi apparatus?</div>
+<div class="m a">The Golgi packages and ships proteins. ATP comes from the mitochondrion, which your notes call “the powerhouse” on page 2.</div>
+<div class="m u">Can you quiz me on that again tomorrow?</div>
+<div class="m a">Done. I’ve scheduled 3 cell energy questions for tomorrow at 8:00 am.</div>
+</div></div></section>
+
+<section class="sec" style="padding:40px 0"><div class="wrap"><div class="stats">
+<div class="glass stat"><b data-n="48000" data-s="+">0</b><span>Active students</span></div>
+<div class="glass stat"><b data-n="2.4" data-d="1" data-s="M">0</b><span>Quizzes generated</span></div>
+<div class="glass stat"><b data-n="94" data-s="%">0</b><span>Say they remember more</span></div>
+<div class="glass stat"><b data-n="3" data-s=" sec">0</b><span>Average time to first quiz</span></div>
+</div></div></section>
+
+<section class="sec"><div class="wrap">
+<h2 class="rv">Students are quietly acing it</h2>
+<div class="tg">
+<div class="glass card rv"><p>I pasted my pharmacology notes at midnight and had a full quiz before my tea cooled. Scored 18 points higher than last exam.</p><div class="who"><div class="av"><span></span></div><div>Aanya R.<small>Pharmacy, year 2</small></div></div></div>
+<div class="glass card rv"><p>The study partner explained a mistake using my own lecture slides. That’s the first time an AI tool felt like it was on my side.</p><div class="who"><div class="av"><span style="background:linear-gradient(135deg,#E04BD8,var(--primary))"></span></div><div>Marcus T.<small>Law student</small></div></div></div>
+<div class="glass card rv"><p>Our study group shares one deck and watches the weak spot radar. We stopped arguing about what to review.</p><div class="who"><div class="av"><span style="background:linear-gradient(135deg,var(--accent),var(--ok))"></span></div><div>Priya & friends<small>Engineering, year 3</small></div></div></div>
+</div></div></section>
+
+<section class="sec" id="faq"><div class="wrap">
+<h2 class="rv" style="margin:0 auto;text-align:center">Questions, answered</h2>
+<div class="faq">
+<details class="glass rv" open><summary>What can I upload?<svg class="i"><use href="#plus"/></svg></summary><p>Typed notes, PDFs, slides and photos of handwriting. We read them and build questions from the content.</p></details>
+<details class="glass rv"><summary>Is the AI making things up?<svg class="i"><use href="#plus"/></svg></summary><p>Questions and explanations come from your own notes, and each one links to the passage it used so you can check it.</p></details>
+<details class="glass rv"><summary>Is it free?<svg class="i"><use href="#plus"/></svg></summary><p>Yes, you can start free with a monthly allowance of generated quizzes. Upgrade when you need more.</p></details>
+<details class="glass rv"><summary>Can I study with friends?<svg class="i"><use href="#plus"/></svg></summary><p>Share any deck with a link and see how everyone is doing on the same material.</p></details>
+</div></div></section>
+
+<section class="sec" id="cta" style="padding-top:40px"><div class="wrap"><div class="glass big rv">
+<h2 class="grad">Your next exam starts with one paste.</h2>
+<p class="lead">Make your first quiz in under a minute. No card needed.</p>
+<div class="cta"><a class="btn btn-p btn-lg" href="signup.html"><svg class="i"><use href="#zap"/></svg>Create my first quiz</a><a class="btn btn-g btn-lg" href="#features">Explore features</a></div>
+</div></div></section>
+
+<footer><div class="wrap"><div class="fg">
+<div><a class="logo" href="#top"><b><svg class="i"><use href="#spark"/></svg></b>Note2Quiz</a><p class="small" style="color:var(--muted);margin-top:12px;max-width:30ch;font-size:.9rem">Study less time. Remember more.</p></div>
+<div><h4>Product</h4><a href="#features">Features</a><a href="dashboard.html">Dashboard</a><a href="flashcards.html">Flashcards</a><a href="revision-hub.html">Revision hub</a><a href="planner.html">Study planner</a><a href="focus.html">Focus mode</a><a href="leaderboard.html">Leaderboard</a><a href="design-system.html">Design system</a><a href="#ai">Study partner</a></div>
+<div><h4>Company</h4><a href="#top">About</a><a href="#top">Careers</a><a href="#top">Contact</a></div>
+<div><h4>Legal</h4><a href="#top">Privacy</a><a href="#top">Terms</a></div>
+</div><p class="copy">© 2026 Note2Quiz. All rights reserved.</p></div></footer>
+
+<script src="assets/js/landing.js"></script>
+</body>
+</html>
