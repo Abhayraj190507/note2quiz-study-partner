@@ -31,6 +31,7 @@ Open `index.html` in any browser (or serve the folder with `npx serve`).
 
 
 ## React frontend
+Demo vs. real accounts: visitors without an account see sample data. Creating an account (signup, or first login with a new email) clears all sample data and starts the account empty: 0 XP, no notes, cards, plans or history. Logging out returns to the demo.
 `frontend/` contains the production React app that integrates every module above (landing, auth, dashboard, notes, study partner, quizzes, flashcards, analytics, planner, focus, revision, leaderboard, achievements). See `frontend/README.md`. The plain HTML files in this folder are unchanged.
 
 

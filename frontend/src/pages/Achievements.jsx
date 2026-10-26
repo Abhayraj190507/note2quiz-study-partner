@@ -4,12 +4,15 @@ import { Progress } from '../components/ui/Progress';
 import { PageHeader } from '../components/common/PageHeader';
 import { useGame } from '../lib/game';
 import { badges } from '../data/app';
+import { useData } from '../lib/useData';
 import { cn } from '../lib/utils';
 
-const missions = [{ t: 'Finish one quiz', now: 1, max: 1, xp: 30 }, { t: 'Review 20 flashcards', now: 14, max: 20, xp: 40 }, { t: 'Complete a focus session', now: 0, max: 1, xp: 50 }];
+const demoMissions = [{ t: 'Finish one quiz', now: 1, max: 1, xp: 30 }, { t: 'Review 20 flashcards', now: 14, max: 20, xp: 40 }, { t: 'Complete a focus session', now: 0, max: 1, xp: 50 }];
+
+const freshMissions = demoMissions.map((m) => ({ ...m, now: 0 }));
 
 export default function Achievements() {
-  const g = useGame();
+  const g = useGame(); const { isDemo } = useData(); const missions = isDemo ? demoMissions : freshMissions;
   return (
     <div className="space-y-6">
       <PageHeader title="Achievements" sub="Badges unlock automatically as your XP, level and streak grow." />

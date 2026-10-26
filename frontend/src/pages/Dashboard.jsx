@@ -10,7 +10,7 @@ import { StatCard } from '../components/common/StatCard';
 import { BarChart } from '../components/charts/BarChart';
 import { useGame } from '../lib/game';
 import { timeAgo } from '../lib/utils';
-import { goals, user, week } from '../data/app';
+import { useData } from '../lib/useData';
 
 const greet = () => { const h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'; };
 const kindIcon = { quiz: ListChecks, cards: Layers, focus: Target, notes: FileUp, plan: Award };
@@ -18,11 +18,12 @@ const actions = [
   { to: '/app/notes', icon: FileUp, label: 'Upload notes', sub: 'PDF, DOCX, slides, images', tone: 'primary' },
   { to: '/app/quiz', icon: ListChecks, label: 'Start a quiz', sub: 'Built from your notes', tone: 'accent' },
   { to: '/app/partner', icon: MessagesSquare, label: 'Ask the partner', sub: 'Answers with citations', tone: 'success' },
-  { to: '/app/flashcards', icon: Layers, label: 'Review cards', sub: '14 due today', tone: 'warning' },
+  { to: '/app/flashcards', icon: Layers, label: 'Review cards', sub: 'Review what you’ve learned', tone: 'warning' },
 ];
 
 export default function Dashboard() {
-  const g = useGame();
+  const g = useGame(); const { goals, user, week, isDemo } = useData();
+  const goalPct = isDemo ? 74 : Math.round(goals.reduce((a, x) => a + Math.min(1, x.now / x.max), 0) / goals.length * 100);
   const total = week.reduce((a, d) => a + d.value, 0);
   return (
     <div className="space-y-6">
@@ -32,26 +33,28 @@ export default function Dashboard() {
         <div className="relative flex flex-wrap items-center justify-between gap-6">
           <div className="max-w-lg">
             <h1 className="font-display text-2xl font-semibold sm:text-3xl">{greet()}, {user.first}.</h1>
-            <p className="mt-2 text-muted">You’re on a {g.streak}-day streak and 26% away from this week’s goal. One quiz on <b className="font-medium text-fg">entropy</b> would close most of it.</p>
-            <div className="mt-5 flex flex-wrap gap-3"><Button to="/app/quiz">Resume where you left off <ArrowRight className="h-4 w-4" /></Button><Button to="/app/partner" variant="secondary">Ask the partner</Button></div>
+            {isDemo
+              ? <p className="mt-2 text-muted">You’re on a {g.streak}-day streak and 26% away from this week’s goal. One quiz on <b className="font-medium text-fg">entropy</b> would close most of it.</p>
+              : <p className="mt-2 text-muted">Welcome to Note2Quiz. Upload your first notes and I’ll turn them into quizzes, flashcards and a study plan.</p>}
+            <div className="mt-5 flex flex-wrap gap-3"><Button to={isDemo ? '/app/quiz' : '/app/notes'}>{isDemo ? 'Resume where you left off' : 'Upload your first notes'} <ArrowRight className="h-4 w-4" /></Button><Button to="/app/partner" variant="secondary">Ask the partner</Button></div>
           </div>
-          <ProgressRing value={74} size={120} stroke={10} tone="accent"><div><p className="font-display text-2xl font-semibold">74%</p><p className="text-[11px] text-muted">weekly goal</p></div></ProgressRing>
+          <ProgressRing value={goalPct} size={120} stroke={10} tone="accent"><div><p className="font-display text-2xl font-semibold">{goalPct}%</p><p className="text-[11px] text-muted">weekly goal</p></div></ProgressRing>
         </div>
       </motion.div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard icon={Zap} label="Total XP" value={g.xp} delta={12} spark={[3, 4, 3, 6, 5, 8, 9]} tone="primary" />
-        <StatCard icon={Brain} label={`Level progress (${Math.round(g.progress * 100)}%)`} value={g.level} suffix="" spark={[2, 3, 5, 4, 6, 7, 9]} tone="accent" />
-        <StatCard icon={Flame} label="Day streak" value={g.streak} delta={9} spark={[1, 2, 4, 5, 7, 9, 12]} tone="warning" />
-        <StatCard icon={Target} label="Quiz accuracy" value={78} suffix="%" delta={6} spark={[60, 66, 64, 70, 72, 75, 78]} tone="success" />
+        <StatCard icon={Zap} label="Total XP" value={g.xp} delta={isDemo ? 12 : undefined} spark={isDemo ? [3, 4, 3, 6, 5, 8, 9] : undefined} tone="primary" />
+        <StatCard icon={Brain} label={`Level progress (${Math.round(g.progress * 100)}%)`} value={g.level} suffix="" spark={isDemo ? [2, 3, 5, 4, 6, 7, 9] : undefined} tone="accent" />
+        <StatCard icon={Flame} label="Day streak" value={g.streak} delta={isDemo ? 9 : undefined} spark={isDemo ? [1, 2, 4, 5, 7, 9, 12] : undefined} tone="warning" />
+        <StatCard icon={Target} label="Quiz accuracy" value={isDemo ? 78 : 0} suffix="%" delta={isDemo ? 6 : undefined} spark={isDemo ? [60, 66, 64, 70, 72, 75, 78] : undefined} tone="success" />
       </div>
 
       {/* Charts */}
       <div className="grid gap-4 lg:grid-cols-[1.7fr_1fr]">
         <Card>
-          <CardHeader title="Study time this week" sub={`${Math.floor(total / 60)}h ${total % 60}m so far. Saturday was your best day.`} action={<Badge tone="success">+14% vs last week</Badge>} />
-          <BarChart data={week} active={5} unit="m" height={190} />
+          <CardHeader title="Study time this week" sub={isDemo ? `${Math.floor(total / 60)}h ${total % 60}m so far. Saturday was your best day.` : 'Nothing logged yet. Start a focus session or quiz.'} action={isDemo ? <Badge tone="success">+14% vs last week</Badge> : null} />
+          <BarChart data={week} active={isDemo ? 5 : -1} unit="m" height={190} />
         </Card>
         <Card>
           <CardHeader title="Weekly goals" sub="Resets on Monday" />
@@ -70,6 +73,7 @@ export default function Dashboard() {
       <div className="grid gap-4 lg:grid-cols-[1fr_1.2fr]">
         <Card>
           <CardHeader title="Recent activity" />
+          {!g.activity.length && <p className="rounded-xl border border-dashed border-line p-6 text-center text-sm text-muted">No activity yet. Finish a quiz, review cards or upload notes and it will show up here.</p>}
           <ul className="space-y-1">
             {g.activity.slice(0, 5).map((a) => { const I = kindIcon[a.kind] || Award; return (
               <li key={a.id} className="flex items-center gap-3 rounded-xl px-2 py-2.5 transition hover:bg-fg/[.04]">

@@ -6,7 +6,8 @@ import { Button } from '../components/ui/Button';
 import { Segmented } from '../components/ui/Segmented';
 import { useStream } from '../hooks/useStream';
 import { useToast } from '../lib/toast';
-import { REPLIES, FALLBACK, SUGGESTIONS, sessions, notes } from '../data/app';
+import { REPLIES, FALLBACK, SUGGESTIONS } from '../data/app';
+import { useData } from '../lib/useData';
 import { cn } from '../lib/utils';
 
 const MODES = [
@@ -43,6 +44,7 @@ function Reply({ m, onTick }) {
 }
 
 export default function StudyPartner() {
+  const { sessions, notes } = useData();
   const [mode, setMode] = useState('general');
   const [msgs, setMsgs] = useState([]);
   const [text, setText] = useState('');
@@ -67,6 +69,7 @@ export default function StudyPartner() {
       <aside className="glass hidden flex-col rounded-2xl p-3 lg:flex">
         <Button variant="secondary" size="sm" className="mb-3 w-full" onClick={() => setMsgs([])}><Plus className="h-4 w-4" />New chat</Button>
         <p className="mb-2 px-2 text-xs text-muted">History</p>
+        {!sessions.length && <p className="px-2 text-xs text-muted">Your chats will appear here.</p>}
         <ul className="space-y-0.5 overflow-y-auto">{sessions.map((s) => <li key={s.id}><button onClick={() => send(s.title)} className="flex w-full items-center justify-between gap-2 rounded-lg px-2 py-2 text-left text-sm text-muted transition hover:bg-fg/[.06] hover:text-fg"><span className="truncate">{s.title}</span><span className="text-[11px]">{s.when}</span></button></li>)}</ul>
       </aside>
 
@@ -106,6 +109,7 @@ export default function StudyPartner() {
       <aside className="glass hidden overflow-y-auto rounded-2xl p-4 xl:block">
         <h2 className="mb-1 flex items-center gap-2 font-display text-sm font-semibold"><BookOpen className="h-4 w-4 text-primary" />Notes in use</h2>
         <p className="mb-4 text-xs text-muted">Untick a file to keep it out of the answers.</p>
+        {!notes.length && <p className="rounded-xl border border-dashed border-line p-3 text-xs text-muted">No notes yet. <Link to="/app/notes" className="text-primary hover:underline">Upload some</Link> and I’ll answer from them.</p>}
         <ul className="space-y-2">{notes.map((n) => { const on = use.has(n.id); return (
           <li key={n.id}><label className={cn('flex cursor-pointer items-start gap-3 rounded-xl border p-3 text-sm transition', on ? 'border-primary/40 bg-primary/10' : 'border-line')}>
             <input type="checkbox" checked={on} onChange={() => toggle(n.id)} className="mt-1 accent-[rgb(var(--primary))]" /><span className="min-w-0"><span className="block truncate font-medium">{n.name}</span><span className="text-xs text-muted">{n.pages} pages, {n.folder}</span></span></label></li>); })}</ul>

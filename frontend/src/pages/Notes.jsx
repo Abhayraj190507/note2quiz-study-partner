@@ -8,16 +8,16 @@ import { Segmented } from '../components/ui/Segmented';
 import { PageHeader } from '../components/common/PageHeader';
 import { useGame } from '../lib/game';
 import { useToast } from '../lib/toast';
-import { folders, notes as seedNotes } from '../data/app';
+import { useData } from '../lib/useData';
 import { cn } from '../lib/utils';
 
 const ICON = { PDF: FileText, DOCX: FileText, PPT: Presentation, TXT: FileText, IMG: ImageIcon };
 const typeOf = (name) => { const e = name.split('.').pop().toUpperCase(); return ['PDF', 'DOCX', 'PPT', 'PPTX', 'TXT'].includes(e) ? e.replace('PPTX', 'PPT') : 'IMG'; };
 
 export default function Notes() {
-  const { awardXp } = useGame(); const toast = useToast(); const input = useRef(null);
+  const { awardXp } = useGame(); const toast = useToast(); const input = useRef(null); const { notes: seedNotes, folders } = useData();
   const [files, setFiles] = useState(seedNotes); const [drag, setDrag] = useState(false);
-  const [q, setQ] = useState(''); const [folder, setFolder] = useState('All'); const [sel, setSel] = useState(seedNotes[0].id);
+  const [q, setQ] = useState(''); const [folder, setFolder] = useState('All'); const [sel, setSel] = useState(seedNotes[0]?.id ?? null);
 
   const add = (list) => {
     [...list].forEach((f) => {
@@ -54,7 +54,7 @@ export default function Notes() {
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary"><I className="h-5 w-5" /></span>
               <span className="min-w-0"><span className="block truncate text-sm font-medium">{f.name}</span><span className="text-xs text-muted">{f.size}, {f.when}</span><span className="mt-2 flex gap-1.5"><Badge>{f.type}</Badge>{f.folder !== 'All' && <Badge tone="accent">{f.folder}</Badge>}</span></span>
             </button>); })}
-          {!shown.length && <p className="col-span-full rounded-2xl border border-dashed border-line p-8 text-center text-sm text-muted">No files match. Upload notes or clear the search.</p>}
+          {!shown.length && <p className="col-span-full rounded-2xl border border-dashed border-line p-8 text-center text-sm text-muted">{files.length ? 'No files match. Clear the search or pick another folder.' : 'No notes yet. Drop a file above to get started.'}</p>}
         </div>
         <Card className="h-fit lg:sticky lg:top-24">
           <AnimatePresence mode="wait">

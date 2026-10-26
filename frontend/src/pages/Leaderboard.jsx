@@ -5,21 +5,21 @@ import { Card } from '../components/ui/Card';
 import { Segmented } from '../components/ui/Segmented';
 import { PageHeader } from '../components/common/PageHeader';
 import { useGame } from '../lib/game';
-import { board, user } from '../data/app';
+import { useData } from '../lib/useData';
 import { cn } from '../lib/utils';
 
 export default function Leaderboard() {
-  const g = useGame(); const [scope, setScope] = useState('Global');
+  const g = useGame(); const { board, user } = useData(); const [scope, setScope] = useState('Global');
   const rows = useMemo(() => {
     const all = [...board, { name: `${user.name} (you)`, xp: g.xp, college: user.college, me: true }].sort((a, b) => b.xp - a.xp);
-    return (scope === 'My college' ? all.filter((r) => r.college === user.college) : all).map((r, i) => ({ ...r, rank: i + 1 }));
-  }, [g.xp, scope]);
+    return (scope === 'My college' ? all.filter((r) => r.college === user.college || r.me) : all).map((r, i) => ({ ...r, rank: i + 1 }));
+  }, [g.xp, scope, board, user]);
   const top = rows.slice(0, 3); const order = [top[1], top[0], top[2]].filter(Boolean); const h = { 1: 'h-32', 2: 'h-24', 3: 'h-20' };
   const me = rows.find((r) => r.me); const above = rows[me.rank - 2];
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Leaderboard" sub={above ? `${(above.xp - me.xp).toLocaleString()} XP to pass ${above.name.split(' ')[0]}.` : 'You’re in first place.'} action={<Segmented options={['Global', 'My college']} value={scope} onChange={setScope} />} />
+      <PageHeader title="Leaderboard" sub={above ? `${(above.xp - me.xp).toLocaleString()} XP to pass ${above.name.split(' ')[0]}.` : board.length ? 'You’re in first place.' : 'You’re the first one here. Earn XP to start the board.'} action={<Segmented options={['Global', 'My college']} value={scope} onChange={setScope} />} />
       <div className="mx-auto flex max-w-xl items-end justify-center gap-3 pt-6">
         {order.map((r) => (
           <div key={r.name} className="flex flex-1 flex-col items-center text-center">
