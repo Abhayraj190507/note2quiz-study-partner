@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FileText, Image as ImageIcon, Layers, ListChecks, MessagesSquare, Presentation, Search, UploadCloud } from 'lucide-react';
+import { FileText, Image as ImageIcon, Layers, ListChecks, MessagesSquare, Presentation, Search, Trash2, UploadCloud } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -12,22 +12,34 @@ import { useData } from '../lib/useData';
 import { cn } from '../lib/utils';
 
 const ICON = { PDF: FileText, DOCX: FileText, PPT: Presentation, TXT: FileText, IMG: ImageIcon };
+const NOTES_KEY = 'n2q-react-notes'; // "n2q-react-" prefix: cleared on logout/new account like other saved data
+const ago = (t) => { if (!t) return 'Earlier'; const m = Math.floor((Date.now() - t) / 60000); if (m < 1) return 'Just now'; if (m < 60) return `${m} min ago`; const h = Math.floor(m / 60); if (h < 24) return `${h} h ago`; return `${Math.floor(h / 24)} d ago`; };
+const load = (seed) => { try { const s = JSON.parse(localStorage.getItem(NOTES_KEY)); if (Array.isArray(s)) return s.map((x) => x.status === 'analysing' ? { ...x, status: 'ready', summary: x.summary || 'Saved.' } : x); } catch {} return seed; };
+const readText = (f) => new Promise((res) => { const r = new FileReader(); r.onload = () => res(String(r.result || '')); r.onerror = () => res(''); r.readAsText(f); });
 const typeOf = (name) => { const e = name.split('.').pop().toUpperCase(); return ['PDF', 'DOCX', 'PPT', 'PPTX', 'TXT'].includes(e) ? e.replace('PPTX', 'PPT') : 'IMG'; };
 
 export default function Notes() {
   const { awardXp } = useGame(); const toast = useToast(); const input = useRef(null); const { notes: seedNotes, folders } = useData();
-  const [files, setFiles] = useState(seedNotes); const [drag, setDrag] = useState(false);
+  const [files, setFiles] = useState(() => load(seedNotes));
+  useEffect(() => { try { localStorage.setItem(NOTES_KEY, JSON.stringify(files)); } catch {} }, [files]); const [drag, setDrag] = useState(false);
   const [q, setQ] = useState(''); const [folder, setFolder] = useState('All'); const [sel, setSel] = useState(seedNotes[0]?.id ?? null);
 
   const add = (list) => {
-    [...list].forEach((f) => {
-      const id = Math.random();
-      setFiles((p) => [{ id, name: f.name, type: typeOf(f.name), size: `${Math.max(1, Math.round(f.size / 1024))} KB`, folder: 'All', pages: 1, when: 'Just now', status: 'analysing', summary: '', points: [] }, ...p]);
+    [...list].forEach(async (f) => {
+      const id = Date.now() + Math.random();
+      const type = typeOf(f.name);
+      setFiles((p) => [{ id, name: f.name, type, size: `${Math.max(1, Math.round(f.size / 1024))} KB`, folder: 'All', pages: 1, at: Date.now(), status: 'analysing', summary: '', points: [] }, ...p]);
       setSel(id);
-      setTimeout(() => setFiles((p) => p.map((x) => x.id === id ? { ...x, status: 'ready', summary: 'Analysis complete. Key terms, definitions and formulas were extracted and are ready for quizzes and flashcards.', points: ['Key terms extracted', 'Definitions grouped by topic', 'Ready to quiz'] } : x)), 1600);
+      // Plain-text files are actually read, so the summary reflects what you uploaded. Other formats need the backend to extract text.
+      const text = type === 'TXT' ? (await readText(f)).slice(0, 20000) : '';
+      const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+      const summary = text ? lines.slice(0, 2).join(' ').slice(0, 220) : 'File saved. Connect the backend to extract text and generate quizzes from this file.';
+      const points = text ? lines.slice(0, 4).map((l) => l.slice(0, 90)) : ['Saved to your notes'];
+      setTimeout(() => setFiles((p) => p.map((x) => x.id === id ? { ...x, status: 'ready', summary, points, text } : x)), 800);
       awardXp(20, `Uploaded ${f.name}`, 'notes');
     });
   };
+  const remove = (id) => { setFiles((p) => p.filter((x) => x.id !== id)); setSel(null); };
   const shown = files.filter((f) => (folder === 'All' || f.folder === folder) && f.name.toLowerCase().includes(q.toLowerCase()));
   const cur = files.find((f) => f.id === sel);
 
@@ -52,7 +64,7 @@ export default function Notes() {
           {shown.map((f) => { const I = ICON[f.type] || FileText; return (
             <button key={f.id} onClick={() => setSel(f.id)} className={cn('glass flex items-start gap-3 rounded-2xl p-4 text-left transition hover:-translate-y-0.5', sel === f.id && 'border-primary/60 ring-1 ring-primary/40')}>
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary"><I className="h-5 w-5" /></span>
-              <span className="min-w-0"><span className="block truncate text-sm font-medium">{f.name}</span><span className="text-xs text-muted">{f.size}, {f.when}</span><span className="mt-2 flex gap-1.5"><Badge>{f.type}</Badge>{f.folder !== 'All' && <Badge tone="accent">{f.folder}</Badge>}</span></span>
+              <span className="min-w-0"><span className="block truncate text-sm font-medium">{f.name}</span><span className="text-xs text-muted">{f.size}, {f.at ? ago(f.at) : f.when}</span><span className="mt-2 flex gap-1.5"><Badge>{f.type}</Badge>{f.folder !== 'All' && <Badge tone="accent">{f.folder}</Badge>}</span></span>
             </button>); })}
           {!shown.length && <p className="col-span-full rounded-2xl border border-dashed border-line p-8 text-center text-sm text-muted">{files.length ? 'No files match. Clear the search or pick another folder.' : 'No notes yet. Drop a file above to get started.'}</p>}
         </div>
@@ -65,7 +77,8 @@ export default function Notes() {
                   <p className="mt-3 text-sm text-muted">{cur.summary}</p>
                   <ul className="mt-4 space-y-2 text-sm">{cur.points.map((p) => <li key={p} className="flex gap-2"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />{p}</li>)}</ul>
                   <div className="mt-5 grid gap-2"><Button to="/app/quiz"><ListChecks className="h-4 w-4" />Generate quiz</Button>
-                    <div className="grid grid-cols-2 gap-2"><Button variant="secondary" size="sm" onClick={() => toast('Flashcards created', `From ${cur.name}`)}><Layers className="h-4 w-4" />Flashcards</Button><Button to="/app/partner" variant="secondary" size="sm"><MessagesSquare className="h-4 w-4" />Ask partner</Button></div></div>
+                    <div className="grid grid-cols-2 gap-2"><Button variant="secondary" size="sm" onClick={() => toast('Flashcards created', `From ${cur.name}`)}><Layers className="h-4 w-4" />Flashcards</Button><Button to="/app/partner" variant="secondary" size="sm"><MessagesSquare className="h-4 w-4" />Ask partner</Button></div>
+                    <Button variant="secondary" size="sm" onClick={() => remove(cur.id)}><Trash2 className="h-4 w-4" />Delete note</Button></div>
                 </>)}
               </motion.div>
             )}
