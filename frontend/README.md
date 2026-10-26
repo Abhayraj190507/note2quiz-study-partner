@@ -20,6 +20,11 @@ The original plain HTML version is untouched in the parent folder.
 Run `npm run build` and upload the `dist` folder to Netlify or Vercel.
 `public/_redirects` and `vercel.json` already make page refreshes work on both.
 
+The Netlify configuration excludes only `Publishdirectory` from secrets scanning
+because it contains a public build output path. Scanning remains enabled for all
+other environment variables. Configure the publish directory in Netlify's build
+settings; it does not need a separate environment variable.
+
 ## Folder structure
 
 ```
