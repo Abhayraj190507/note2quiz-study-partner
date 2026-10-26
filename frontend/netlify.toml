@@ -1,0 +1,3 @@
+[build.environment]
+  # This variable contains a public output path, not a credential.
+  SECRETS_SCAN_OMIT_KEYS = "Publishdirectory"
