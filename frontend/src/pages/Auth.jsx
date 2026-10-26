@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Eye, EyeOff, MailCheck, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Logo } from '../components/common/Logo';
+import { useGame } from '../lib/game';
 import { Backdrop } from '../components/common/Backdrop';
 import { ThemeToggle } from '../components/common/ThemeToggle';
 
@@ -18,7 +19,7 @@ const AUTOCOMPLETE = { name: 'name', email: 'email', password: 'current-password
 
 
 export default function Auth({ mode }) {
-  const c = COPY[mode]; const nav = useNavigate();
+  const c = COPY[mode]; const nav = useNavigate(); const { signUp, login } = useGame();
   const [v, setV] = useState({ name: '', email: '', password: '', confirm: '' }); const [err, setErr] = useState({});
   const [show, setShow] = useState(false); const [busy, setBusy] = useState(false); const [sent, setSent] = useState(false);
 
@@ -34,7 +35,7 @@ export default function Auth({ mode }) {
   const submit = (ev) => {
     ev.preventDefault(); const e = validate(); setErr(e); if (Object.keys(e).length) return;
     setBusy(true);
-    setTimeout(() => { setBusy(false); if (mode === 'login' || mode === 'signup') nav('/app'); else if (mode === 'forgot') setSent(true); else nav('/login'); }, 800);
+    setTimeout(() => { setBusy(false); if (mode === 'signup') { signUp(v); nav('/app'); } else if (mode === 'login') { login(v); nav('/app'); } else if (mode === 'forgot') setSent(true); else nav('/login'); }, 800);
   };
 
   return (

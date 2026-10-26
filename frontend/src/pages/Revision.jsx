@@ -3,18 +3,21 @@ import { Check } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Segmented } from '../components/ui/Segmented';
 import { PageHeader } from '../components/common/PageHeader';
-import { revision as R } from '../data/app';
+import { useData } from '../lib/useData';
+import { Button } from '../components/ui/Button';
 import { cn } from '../lib/utils';
 
 const TABS = ['Quick notes', 'Last-minute checklist', 'Formulas', 'Definitions'];
 
 export default function Revision() {
+  const { revision: R, isDemo } = useData();
   const [tab, setTab] = useState(TABS[0]); const [done, setDone] = useState(new Set());
   return (
     <div className="space-y-6">
       <PageHeader title="Revision hub" sub="The short version of everything, for the night before." />
       <Segmented options={TABS} value={tab} onChange={setTab} />
       <Card className="p-2 sm:p-4">
+        {tab !== 'Last-minute checklist' && !R[tab === 'Quick notes' ? 'quick' : tab === 'Formulas' ? 'formulas' : 'definitions'].length && <div className="p-8 text-center"><p className="font-medium">Nothing here yet</p><p className="mt-1 text-sm text-muted">Upload notes and your {tab.toLowerCase()} will be collected here.</p><Button to="/app/notes" size="sm" className="mt-4">Upload notes</Button></div>}
         {tab === 'Quick notes' && <ul className="divide-y divide-line">{R.quick.map((t) => <li key={t} className="px-3 py-4">{t}</li>)}</ul>}
         {tab === 'Last-minute checklist' && <ul>{R.checklist.map((t) => { const on = done.has(t); return (
           <li key={t}><button onClick={() => setDone((s) => { const n = new Set(s); n.has(t) ? n.delete(t) : n.add(t); return n; })} aria-pressed={on} className="flex w-full items-center gap-3 rounded-xl px-3 py-3.5 text-left transition hover:bg-fg/[.04]">

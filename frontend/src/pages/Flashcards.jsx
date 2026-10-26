@@ -6,27 +6,30 @@ import { Badge } from '../components/ui/Badge';
 import { Progress } from '../components/ui/Progress';
 import { PageHeader } from '../components/common/PageHeader';
 import { useGame } from '../lib/game';
-import { deck } from '../data/app';
+import { useData } from '../lib/useData';
+import { Layers } from 'lucide-react';
 
 const RATES = [['Again', 'danger', 'in 1 min'], ['Hard', 'warning', 'in 1 day'], ['Good', 'accent', 'in 3 days'], ['Easy', 'success', 'in 7 days']];
 
 export default function Flashcards() {
-  const { awardXp } = useGame(); const paid = useRef(false);
+  const { awardXp } = useGame(); const paid = useRef(false); const { deck } = useData();
   const [i, setI] = useState(0); const [flip, setFlip] = useState(false);
-  const finished = i >= deck.length; const c = deck[i];
+  const empty = !deck.length; const finished = !empty && i >= deck.length; const c = deck[i];
   const rate = () => { setFlip(false); setI((x) => x + 1); };
 
   useEffect(() => { if (finished && !paid.current) { paid.current = true; awardXp(deck.length * 2, `Reviewed ${deck.length} flashcards`, 'cards'); } }, [finished, awardXp]);
   useEffect(() => {
-    const h = (e) => { if (finished) return; if (e.code === 'Space') { e.preventDefault(); setFlip((f) => !f); } if (flip && /^[1-4]$/.test(e.key)) rate(); };
+    const h = (e) => { if (finished) return; if (!deck.length) return; if (e.code === 'Space') { e.preventDefault(); setFlip((f) => !f); } if (flip && /^[1-4]$/.test(e.key)) rate(); };
     window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h);
   });
 
   return (
     <div className="mx-auto max-w-xl">
       <PageHeader title="Flashcards" sub="Flip, rate how well you knew it, and each card returns at the right time." />
-      <Progress value={(Math.min(i, deck.length) / deck.length) * 100} className="mb-6" />
-      {finished ? (
+      <Progress value={empty ? 0 : (Math.min(i, deck.length) / deck.length) * 100} className="mb-6" />
+      {empty ? (
+        <div className="glass rounded-3xl p-10 text-center"><span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-primary/15 text-primary"><Layers className="h-6 w-6" /></span><p className="font-display text-xl font-semibold">No flashcards yet</p><p className="mt-2 text-muted">Upload notes and cards will be created from them.</p><Button to="/app/notes" className="mt-6">Upload notes</Button></div>
+      ) : finished ? (
         <div className="glass rounded-3xl p-10 text-center">
           <p className="font-display text-2xl font-semibold">Deck complete</p><p className="mt-2 text-muted">{deck.length} cards reviewed. They’ll come back on the schedule you chose.</p>
           <Button className="mt-6" onClick={() => { setI(0); paid.current = false; }}><RotateCcw className="h-4 w-4" />Review again</Button>

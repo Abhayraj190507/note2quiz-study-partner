@@ -11,7 +11,8 @@ import { AreaChart } from '../components/charts/AreaChart';
 import { Radar } from '../components/charts/Radar';
 import { Donut } from '../components/charts/Donut';
 import { Heatmap } from '../components/charts/Heatmap';
-import { subjects, weakTopics } from '../data/app';
+import { useData } from '../lib/useData';
+import { BarChart3 } from 'lucide-react';
 import { seeded } from '../lib/utils';
 
 const RANGES = {
@@ -30,12 +31,25 @@ function build(range) {
 const heat = (() => { const r = seeded(11); return Array.from({ length: 16 }, (_, w) => Array.from({ length: 7 }, () => Math.min(4, Math.floor(r() * 5 * (0.5 + w / 20))))); })();
 
 export default function Analytics() {
+  const { subjects, weakTopics, isDemo } = useData();
   const [range, setRange] = useState('7D');
   const { labels } = RANGES[range]; const d = useMemo(() => build(range), [range]);
   const hrs = Math.round(d.minutes.reduce((a, b) => a + b, 0) / 60);
   const gain = d.accuracy[d.accuracy.length - 1] - d.accuracy[0];
   const best = labels[d.minutes.indexOf(Math.max(...d.minutes))];
   const gap = weakTopics[0];
+
+  if (!isDemo) return (
+    <div className="space-y-6">
+      <PageHeader title="Analytics" sub="Where your time goes, what you’ve mastered, and what to fix next." />
+      <div className="glass mx-auto max-w-lg rounded-3xl p-10 text-center">
+        <span className="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-primary/15 text-primary"><BarChart3 className="h-6 w-6" /></span>
+        <p className="font-display text-xl font-semibold">No data yet</p>
+        <p className="mt-2 text-muted">Take a quiz or finish a focus session and your charts will appear here.</p>
+        <Button to="/app/quiz" className="mt-6">Take a quiz</Button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="space-y-6">

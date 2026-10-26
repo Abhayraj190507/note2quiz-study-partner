@@ -35,7 +35,7 @@ export function AppShell() {
           <span className="hidden items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1.5 text-[13px] font-medium text-primary sm:flex"><Zap className="h-3.5 w-3.5" />{g.xp.toLocaleString()} XP</span>
           <ThemeToggle />
           <Link to="/" className="hidden text-[13px] text-muted hover:text-fg md:block">Home</Link>
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-primary to-accent text-sm font-semibold text-white" aria-label="Your profile">MC</span>
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-primary to-accent text-sm font-semibold text-white" aria-label="Your profile">{g.isDemo ? 'MC' : g.user.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}</span>
         </div>
       </header>
 
